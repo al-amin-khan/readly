@@ -1,6 +1,8 @@
 package me.alaminkhan.readly.book;
 
 import com.sun.istack.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
+@Table(name = "books")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +30,7 @@ public class Book {
     String genre;
     Long isbn;
     String rating;
+    @Column(columnDefinition = "TEXT")
     String description;
     Long pages;
     Date publishedDate;
