@@ -1,7 +1,9 @@
 package me.alaminkhan.readly.book;
 
 import com.sun.istack.NotNull;
+import java.sql.Blob;
 import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,16 +25,22 @@ import java.util.Date;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
     @NotNull
-    String title;
-    String author;
-    String genre;
-    Long isbn;
-    String rating;
-    @Column(columnDefinition = "TEXT")
-    String description;
-    Long pages;
-    Date publishedDate;
-    String language;
+    private String title;
+    @Lob
+    private byte[] cover;
+    private String author;
+    private String genre;
+    private Long isbn;
+    private String rating;
+    @Column(columnDefinition = "TEXT", length = Integer.MIN_VALUE)
+    private String description;
+    private Long pages;
+    private Date publishedDate;
+    private String language;
+
+    public Book(Long bookId) {
+        this.id = bookId;
+    }
 }
