@@ -1,6 +1,7 @@
 package me.alaminkhan.readly.book;
 
 import com.sun.istack.NotNull;
+import java.io.Serializable;
 import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Lob;
@@ -22,7 +23,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
+public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -39,8 +40,4 @@ public class Book {
     private Long pages;
     private Date publishedDate;
     private String language;
-
-    public Book(Long bookId) {
-        this.id = bookId;
-    }
 }

@@ -11,25 +11,30 @@ public class BookService {
   @Autowired
   private BookRepository bookRepository;
 
-  public List<Book> getAllTopics(){
+  public List<Book> getAllBooks(){
     List<Book> books = new ArrayList<>();
     bookRepository.findAll().forEach(books::add);
     return books;
   }
 
-  public Optional<Book> getTopic(Long id){
+  public Book findBookById(Long id) {
+    return bookRepository.findBookById(id)
+        .orElseThrow(() -> new BookNotFoundException("Book by id " + id + " was not found"));
+  }
+
+  public Optional<Book> getBook(Long id){
     return bookRepository.findById(id);
   }
 
-  public void addTopic(Book book) {
+  public void addBook(Book book) {
     bookRepository.save(book);
   }
 
-  public void updateTopic(Long id, Book book) {
+  public void updateBook(Long id, Book book) {
     bookRepository.save(book);
   }
 
-  public void deleteTopic(Long id) {
+  public void deleteBookById(Long id) {
     bookRepository.deleteById(id);
   }
 }

@@ -15,19 +15,19 @@ public class BookShelvesController {
   @Autowired
   private BookShelvesService bookShelvesService;
 
-  @RequestMapping("/mybookshelves")
+  @RequestMapping("/mybooks")
   public List<BookShelves> getAllCourses(Long bookId){
     return bookShelvesService.getAllBooksFromShelves(bookId);
   }
 
-  @RequestMapping("/mybookshelves/{id}")
+  @RequestMapping("/mybooks/{id}")
   public Optional<BookShelves> getCourse(@PathVariable Long id){
     return bookShelvesService.getBookFromShelves(id);
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "/mybookshelves")
-  public void addBookToShelves(@RequestBody BookShelves bookShelves, @PathVariable Long bookId){
-    bookShelves.setBook(new Book(bookId));
+  @RequestMapping(method = RequestMethod.POST, value = "/mybooks")
+  public void addBookToShelves(@RequestBody BookShelves bookShelves){
+    bookShelves.setBook(new Book());
     bookShelvesService.addBookToShelves(bookShelves);
   }
 }
