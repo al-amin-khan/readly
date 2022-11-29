@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BookService {
@@ -30,11 +31,15 @@ public class BookService {
     bookRepository.save(book);
   }
 
-  public void updateBook(Long id, Book book) {
+  public void updateBook(Book book) {
     bookRepository.save(book);
   }
 
   public void deleteBookById(Long id) {
     bookRepository.deleteById(id);
+  }
+
+  public void uploadImageFile(Book book){
+    bookRepository.save(book);
   }
 }

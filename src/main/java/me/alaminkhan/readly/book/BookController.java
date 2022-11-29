@@ -33,13 +33,24 @@ public class BookController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/books")
-  public void addBook(@RequestBody Book book){
-    bookService.addBook(book);
+  public void addBook(@RequestParam String title,  @RequestParam("cover") MultipartFile file)
+      throws IOException {
+    Book bookCoverImage = new Book();
+    bookCoverImage.setCover(file.getBytes());
+    bookService.uploadImageFile(bookCoverImage);
+//    bookService.addBook(book);
   }
 
-  @RequestMapping(method = RequestMethod.PUT, value = "/books/{id}")
-  public void updateBook(@RequestBody Book book, @PathVariable Long id){
-    bookService.updateBook(id, book);
+  @RequestMapping(method = RequestMethod.POST, value = "/books/saveImage")
+  public void uploadImage(@RequestParam("cover") MultipartFile file) throws IOException {
+    Book bookCoverImage = new Book();
+    bookCoverImage.setCover(file.getBytes());
+    bookService.uploadImageFile(bookCoverImage);
+  }
+
+  @RequestMapping(method = RequestMethod.PUT, value = "/books/update")
+  public void updateBook(@RequestBody Book book){
+    bookService.updateBook(book);
   }
 
   @RequestMapping(method = RequestMethod.DELETE, value = "/books/{id}")
