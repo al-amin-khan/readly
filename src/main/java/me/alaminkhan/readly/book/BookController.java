@@ -1,7 +1,16 @@
 package me.alaminkhan.readly.book;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +42,24 @@ public class BookController {
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/books")
-  public void addBook(@RequestParam String title,  @RequestParam("cover") MultipartFile file)
-      throws IOException {
-    Book bookCoverImage = new Book();
-    bookCoverImage.setCover(file.getBytes());
-    bookService.uploadImageFile(bookCoverImage);
-//    bookService.addBook(book);
+  public void addBook(@RequestParam Map<String, String> reqParam,  @RequestParam("cover") MultipartFile file)
+      throws IOException, ParseException {
+    Book book = new Book();
+    book.setTitle(reqParam.get("title"));
+    book.setAuthor(reqParam.get("author"));
+    book.setGenre(reqParam.get("genre"));
+    book.setIsbn(Long.parseLong(reqParam.get("isbn")));
+    book.setRating(reqParam.get("rating"));
+    book.setDescription(reqParam.get("description"));
+    book.setPages(Long.parseLong(reqParam.get("pages")));
+
+    String date = reqParam.get("publishedDate");
+    Date publishedDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+    book.setPublishedDate(publishedDate);
+    book.setLanguage(reqParam.get("language"));
+    book.setCover(file.getBytes());
+//    bookService.uploadImageFile(bookCoverImage);
+    bookService.addBook(book);
   }
 
   @RequestMapping(method = RequestMethod.POST, value = "/books/saveImage")

@@ -3,6 +3,7 @@ package me.alaminkhan.readly.book;
 import com.sun.istack.NotNull;
 import java.io.Serializable;
 import java.sql.Blob;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Table;
