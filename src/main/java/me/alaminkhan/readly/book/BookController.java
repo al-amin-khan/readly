@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,8 +42,8 @@ public class BookController {
     return bookService.getBook(id);
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "/books")
-  public void addBook(@RequestParam Map<String, String> reqParam,  @RequestParam("cover") MultipartFile file)
+  @RequestMapping(method = RequestMethod.POST, value = "/books/add")
+  public void addBook(@RequestParam Map<String, String> reqParam, @RequestParam("publishedDate") Date publishedDate, @RequestParam("cover") MultipartFile file)
       throws IOException, ParseException {
     Book book = new Book();
     book.setTitle(reqParam.get("title"));
@@ -52,33 +53,32 @@ public class BookController {
     book.setRating(reqParam.get("rating"));
     book.setDescription(reqParam.get("description"));
     book.setPages(Long.parseLong(reqParam.get("pages")));
-
-    String date = reqParam.get("publishedDate");
-    Date publishedDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
     book.setPublishedDate(publishedDate);
     book.setLanguage(reqParam.get("language"));
     book.setCover(file.getBytes());
-//    bookService.uploadImageFile(bookCoverImage);
     bookService.addBook(book);
   }
 
-  @RequestMapping(method = RequestMethod.POST, value = "/books/saveImage")
-  public void uploadImage(@RequestParam("cover") MultipartFile file) throws IOException {
-    Book bookCoverImage = new Book();
-    bookCoverImage.setCover(file.getBytes());
-    bookService.uploadImageFile(bookCoverImage);
-  }
-
   @RequestMapping(method = RequestMethod.PUT, value = "/books/update")
-  public void updateBook(@RequestBody Book book){
-    bookService.updateBook(book);
+  public void updateBook(@RequestParam Map<String, String> reqParam, @RequestParam("publishedDate") Date publishedDate, @RequestParam("cover") MultipartFile file)
+      throws IOException {
+    Book updateBook = new Book();
+    updateBook.setTitle(reqParam.get("title"));
+    updateBook.setAuthor(reqParam.get("author"));
+    updateBook.setGenre(reqParam.get("genre"));
+    updateBook.setIsbn(Long.parseLong(reqParam.get("isbn")));
+    updateBook.setRating(reqParam.get("rating"));
+    updateBook.setDescription(reqParam.get("description"));
+    updateBook.setPages(Long.parseLong(reqParam.get("pages")));
+    updateBook.setPublishedDate(publishedDate);
+    updateBook.setLanguage(reqParam.get("language"));
+    updateBook.setCover(file.getBytes());
+    bookService.updateBook(updateBook);
   }
 
-  @RequestMapping(method = RequestMethod.DELETE, value = "/books/{id}")
+  @RequestMapping(method = RequestMethod.DELETE, value = "/books/delete/{id}")
   public void deleteBook( @PathVariable Long id){
     bookService.deleteBookById(id);
   }
-
-
 
 }
