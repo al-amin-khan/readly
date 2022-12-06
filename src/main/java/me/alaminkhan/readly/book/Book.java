@@ -37,6 +37,7 @@ public class Book implements Serializable {
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] cover;
+    private String coverPhotoName;
 
     private String author;
     private String genre;

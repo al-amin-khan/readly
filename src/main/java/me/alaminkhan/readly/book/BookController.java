@@ -1,6 +1,9 @@
 package me.alaminkhan.readly.book;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -55,7 +58,15 @@ public class BookController {
     book.setPages(Long.parseLong(reqParam.get("pages")));
     book.setPublishedDate(publishedDate);
     book.setLanguage(reqParam.get("language"));
+    book.setCoverPhotoName(file.getOriginalFilename());
     book.setCover(file.getBytes());
+
+
+    Path absolutePath = Paths.get(".");
+    Path path = Paths.get(absolutePath + "/photos/" + file.getOriginalFilename());
+    Files.write(path, file.getBytes());
+//    book.setCover(file.getOriginalFilename());
+
     bookService.addBook(book);
   }
 
