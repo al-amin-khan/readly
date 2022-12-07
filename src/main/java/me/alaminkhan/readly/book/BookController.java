@@ -65,7 +65,6 @@ public class BookController {
     Path absolutePath = Paths.get(".");
     Path path = Paths.get(absolutePath + "/photos/" + file.getOriginalFilename());
     Files.write(path, file.getBytes());
-//    book.setCover(file.getOriginalFilename());
 
     bookService.addBook(book);
   }
@@ -83,7 +82,13 @@ public class BookController {
     updateBook.setPages(Long.parseLong(reqParam.get("pages")));
     updateBook.setPublishedDate(publishedDate);
     updateBook.setLanguage(reqParam.get("language"));
+    updateBook.setCoverPhotoName(file.getOriginalFilename());
     updateBook.setCover(file.getBytes());
+
+//    Path absolutePath = Paths.get(".");
+    Path path = Paths.get( "/photos/" + file.getOriginalFilename());
+    Files.write(path, file.getBytes());
+
     bookService.updateBook(updateBook);
   }
 
