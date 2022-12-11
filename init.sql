@@ -4,7 +4,7 @@
 
 CREATE DATABASE readly
     WITH
-    OWNER = postgres
+--     OWNER = postgres
     ENCODING = 'UTF8'
     LC_COLLATE = 'en_US.UTF-8'
     LC_CTYPE = 'en_US.UTF-8'
@@ -34,10 +34,6 @@ CREATE TABLE IF NOT EXISTS public.books
     CONSTRAINT books_pkey PRIMARY KEY (id)
     )
 
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.books
-    OWNER to postgres;
 
 
 
@@ -61,10 +57,6 @@ CREATE TABLE IF NOT EXISTS public.bookshelves
     ON DELETE NO ACTION
     )
 
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.bookshelves
-    OWNER to postgres;
 
 
 
